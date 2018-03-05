@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.johanaanesen.imt3673_lab02.HomeActivity">
+
+    <ScrollView
+        android:id="@+id/Scroll"
+        style="@style/AlertDialog.AppCompat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@+id/SettingsBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/SettingsBtn"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="3dp"
+        android:onClick="goToPrefs"
+        android:text="Settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/RefreshBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Scroll" />
+
+    <Button
+        android:id="@+id/RefreshBtn"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="3dp"
+        android:text="Refresh"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/SettingsBtn"
+        app:layout_constraintTop_toBottomOf="@+id/Scroll" />
+
+</android.support.constraint.ConstraintLayout>
