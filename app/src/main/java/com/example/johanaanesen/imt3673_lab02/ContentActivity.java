@@ -1,5 +1,6 @@
 package com.example.johanaanesen.imt3673_lab02;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -12,4 +13,9 @@ public class ContentActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
 }

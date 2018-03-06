@@ -11,53 +11,91 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="459dp"
-        android:layout_marginEnd="246dp"
-        android:layout_marginStart="6dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="7dp"
         android:text="Settings"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.446"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="59dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="URL:"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="76dp" />
-
-    <ListView
-        android:layout_width="147dp"
-        android:layout_height="62dp"
-        tools:layout_editor_absoluteX="190dp"
-        tools:layout_editor_absoluteY="167dp"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-    </ListView>
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toStartOf="@+id/prefUrl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="312dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="51dp"
         android:text="Item Limit:"
         android:textSize="24sp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="167dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/prefSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prefUrl" />
 
     <EditText
-        android:id="@+id/editText2"
-        android:layout_width="292dp"
+        android:id="@+id/prefUrl"
+        android:layout_width="265dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="17dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="69dp" />
+        android:text="vg.no/rss"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Spinner
+        android:id="@+id/prefSpinner"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="302dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/prefUrl"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/prefBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginStart="263dp"
+        android:layout_marginTop="235dp"
+        android:onClick="save"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prefSpinner" />
 </android.support.constraint.ConstraintLayout>

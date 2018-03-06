@@ -9,20 +9,26 @@
 
     <ScrollView
         android:id="@+id/Scroll"
-        style="@style/AlertDialog.AppCompat"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/SettingsBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="453dp"
+        android:background="#AAAAAA">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="scrollbar_2_text" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="scrollbar_2_text" />
+
+        </LinearLayout>
     </ScrollView>
 
     <Button
@@ -46,6 +52,7 @@
         android:layout_marginBottom="2dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="3dp"
+        android:onClick="refreshRSS"
         android:text="Refresh"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
