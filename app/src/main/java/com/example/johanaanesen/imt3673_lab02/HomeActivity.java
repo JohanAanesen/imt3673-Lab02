@@ -1,14 +1,20 @@
 package com.example.johanaanesen.imt3673_lab02;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
-
     private static int MAX_ITEMS = 20; //default
 
     @Override
@@ -20,11 +26,15 @@ public class HomeActivity extends AppCompatActivity {
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
         final int userChoice = shared.getInt("spinner-choice", -1);
         switch (userChoice){
+            default: MAX_ITEMS = 20;
             case 0: MAX_ITEMS = 10;
             case 1: MAX_ITEMS = 20;
             case 2: MAX_ITEMS = 50;
             case 3: MAX_ITEMS = 100;
         }
+
+        //GET RSS FEED
+
 
 
     }
