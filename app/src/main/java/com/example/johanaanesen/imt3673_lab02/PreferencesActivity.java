@@ -79,7 +79,7 @@ public class PreferencesActivity extends AppCompatActivity {
         EditText editText = findViewById(R.id.prefUrl);
 
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
-        String userChoice = shared.getString("URL", "http://www.vg.no/RSS");
+        String userChoice = shared.getString("URL", "https://www.vg.no/rss/feed");
         editText.setText(userChoice);
     }
 
@@ -102,7 +102,6 @@ public class PreferencesActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(this, HomeActivity.class);
-        setResult(Activity.RESULT_OK, intent);
-        finish();
+        startActivity(intent);
     }
 }
