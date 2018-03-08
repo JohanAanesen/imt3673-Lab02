@@ -11,10 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
+
     private static int MAX_ITEMS = 20; //default
 
     @Override
@@ -36,10 +41,24 @@ public class HomeActivity extends AppCompatActivity {
         //GET RSS FEED
 
 
+        //Fill ListView
+
+        List<RssFeedModel> rssItemList = new ArrayList<>();
+        RssFeedModel rssTestItem = new RssFeedModel("Title", "Test Link.com", "detastatfas");
+
+        rssItemList.add(rssTestItem);
+
+
+        ListView listView = (ListView)findViewById(R.id.ListeID);
+
+
+        ListAdapter listAdapter = new ListAdapter(this,
+        R.layout.rss_item_layout,
+        rssItemList);
+
+        listView.setAdapter(listAdapter);
 
     }
-
-
 
     public void goToPrefs(View view){
         Intent intent = new Intent(this, PreferencesActivity.class);

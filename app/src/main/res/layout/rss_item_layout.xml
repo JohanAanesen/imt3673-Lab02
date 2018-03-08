@@ -17,7 +17,7 @@
         android:src="@android:drawable/ic_media_play" />
 
     <TextView
-        android:id="@+id/postTitleLabel"
+        android:id="@+id/postTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -30,13 +30,13 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/postDateLabel"
+        android:id="@+id/postLink"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/postThumb"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/postThumb"
         android:maxLines="1"
-        android:text="April 12, 2013"
+        android:text="https://www.vg.no/rss/feed"
         android:textSize="12sp" />
 </RelativeLayout>

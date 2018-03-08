@@ -8,7 +8,7 @@
     tools:context="com.example.johanaanesen.imt3673_lab02.HomeActivity">
 
     <ListView
-        android:id="@+id/postListView"
+        android:id="@+id/ListeID"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/RefreshBtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Scroll" />
+        app:layout_constraintTop_toBottomOf="@+id/ListeID" />
 
     <Button
         android:id="@+id/RefreshBtn"
@@ -43,6 +43,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/SettingsBtn"
-        app:layout_constraintTop_toBottomOf="@+id/Scroll" />
+        app:layout_constraintTop_toBottomOf="@+id/ListeID" />
 
 </android.support.constraint.ConstraintLayout>
