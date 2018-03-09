@@ -13,6 +13,7 @@ import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -43,19 +44,20 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //GET preferences
+        //get preferences
         getPrefs();
 
-        //GET RSS FEED
+        //get rss feed
         new FetchFeedTask().execute((Void) null);
 
-        //Fill ListView
+        //set listView
         listView = (ListView)findViewById(R.id.ListeID);
     }
 
     @Override
     public void onResume(){
         super.onResume();
+        //reload preferences
         getPrefs();
     }
 
@@ -130,12 +132,14 @@ public class HomeActivity extends AppCompatActivity {
                     xmlPullParser.nextTag();
                 }
 
-                if (name.equalsIgnoreCase("title")) {
-                    title = result;
-                } else if (name.equalsIgnoreCase("link")) {
-                    link = result;
-                } else if (name.equalsIgnoreCase("description")) {
-                    description = result;
+                if(isItem) {
+                    if (name.equalsIgnoreCase("title")) {
+                        title = result;
+                    } else if (name.equalsIgnoreCase("link")) {
+                        link = result;
+                    } else if (name.equalsIgnoreCase("description")) {
+                        description = result;
+                    }
                 }
 
                 if (title != null && link != null && description != null) {
@@ -168,9 +172,7 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-
            urlLink = URL;
-           // urlLink = "https://www.vg.no/rss/feed";// + "?limit=" + MAX_ITEMS;
         }
 
         @Override
@@ -186,7 +188,7 @@ public class HomeActivity extends AppCompatActivity {
                 InputStream inputStream = url.openConnection().getInputStream();
                 rssItemList = parseFeed(inputStream);
                 return true;
-            } catch (IOException e) {
+            } catch (IOException e) { //error handling
                 Log.e("HomeActivity", "Error", e);
             } catch (XmlPullParserException e) {
                 Log.e("HomeActivity", "Error", e);
@@ -197,22 +199,32 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean success) {
             if (success) {
-                // Fill RecyclerView
-                setListAdapter();
+                //set list adapter / fill listView
+                listAdapter = new ListAdapter(HomeActivity.this,
+                        R.layout.rss_item_layout,
+                        rssItemList);
+
+                listView.setAdapter(listAdapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position,
+                                            long id) {
+                        RssFeedModel entry= (RssFeedModel) parent.getAdapter().getItem(position);
+                        Intent intent = new Intent(HomeActivity.this, ContentActivity.class);
+                        String message = entry.link;
+                        intent.putExtra("content_url", message);
+                        startActivity(intent);
+                    }
+                });
+                Toast.makeText(HomeActivity.this,
+                        "Successfully updated.",
+                        Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(HomeActivity.this,
                         "Enter a valid Rss feed url",
                         Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    public void setListAdapter(){
-        listAdapter = new ListAdapter(this,
-                R.layout.rss_item_layout,
-                rssItemList);
-
-        listView.setAdapter(listAdapter);
     }
 
     @Override

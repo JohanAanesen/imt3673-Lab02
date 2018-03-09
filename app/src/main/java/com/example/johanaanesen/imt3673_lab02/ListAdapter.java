@@ -2,6 +2,7 @@ package com.example.johanaanesen.imt3673_lab02;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,16 @@ public class ListAdapter extends ArrayAdapter<RssFeedModel> {
         //        tt3.setText(p.getDescription());
           //  }
         }
+
+        /*
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(this, ContentActivity.class);
+
+            }
+        });
+        */
 
         return v;
     }

@@ -16,8 +16,11 @@ public class ContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
 
-        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
-        URL = shared.getString("URL", "http://www.vg.no/RSS");
+        //Get contentURL from HomeActivity
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            URL = extras.getString("content_url");
+        }
 
         WebView w1=(WebView)findViewById(R.id.webView);
 
