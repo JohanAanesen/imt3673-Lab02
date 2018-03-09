@@ -23,6 +23,8 @@ public class ContentActivity extends AppCompatActivity {
         }
 
         WebView w1=(WebView)findViewById(R.id.webView);
+        w1.getSettings().setJavaScriptEnabled(true);
+        w1.getSettings().setBuiltInZoomControls(true);
 
         w1.loadUrl(URL);
     }

@@ -34,7 +34,6 @@ public class ListAdapter extends ArrayAdapter<RssFeedModel> {
         if (p != null) {
             TextView tt1 = (TextView) v.findViewById(R.id.postTitle);
             TextView tt2 = (TextView) v.findViewById(R.id.postLink);
-          //  TextView tt3 = (TextView) v.findViewById(R.id.post);
 
             if (tt1 != null) {
                 tt1.setText(p.title.toString());
@@ -43,21 +42,7 @@ public class ListAdapter extends ArrayAdapter<RssFeedModel> {
             if (tt2 != null) {
                 tt2.setText(p.link.toString());
             }
-
-      //      if (tt3 != null) {
-        //        tt3.setText(p.getDescription());
-          //  }
         }
-
-        /*
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(this, ContentActivity.class);
-
-            }
-        });
-        */
 
         return v;
     }

@@ -14,28 +14,32 @@ import android.widget.Spinner;
 
 public class PreferencesActivity extends AppCompatActivity {
 
-    static final String SPINNER_CHOICE = "spinner-choice";
+    static final String ITEM_SPINNER = "item-spinner";
+    static final String REFRESH_SPINNER = "refresh-spinner";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
 
-        //setup spinner //
-        spinnerSelect();
+        //setup spinners //
+        spinnerSelect((Spinner)findViewById(R.id.itemSpinner), ITEM_SPINNER, R.array.max_Items);
+        spinnerSelect((Spinner)findViewById(R.id.refreshSpinner), REFRESH_SPINNER, R.array.refresh_Items);
 
         //url saved?
         URLSelect();
     }
 
 
-    private void spinnerSelect(){
+    private void spinnerSelect(View view, String save, int itemArray){
+
+        final String SAVE = save;
 
         //spinner
-        final Spinner spinner =  findViewById(R.id.prefSpinner);
+        final Spinner spinner =  (Spinner)view;
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
-                R.array.max_Items,
+                itemArray,
                 android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -43,10 +47,11 @@ public class PreferencesActivity extends AppCompatActivity {
 
         // Get spinner shared state
         final SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(this);
-        final int userChoice = shared.getInt(SPINNER_CHOICE, -1);
+        final int userChoice = shared.getInt(SAVE, -1);
 
         if (userChoice == -1) {
-            //Error?
+            //Error, set to 0
+            spinner.setSelection(0);
         } else {
             spinner.setSelection(userChoice);
         }
@@ -61,7 +66,7 @@ public class PreferencesActivity extends AppCompatActivity {
                 if (item != null)
                 {
                     SharedPreferences.Editor editor = shared.edit();
-                    editor.putInt(SPINNER_CHOICE, position); // Storing integer
+                    editor.putInt(SAVE, position); // Storing integer
                     editor.apply(); // commit changes
 
                 }
@@ -70,7 +75,9 @@ public class PreferencesActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView)
             {
-                //Error?
+                SharedPreferences.Editor editor = shared.edit();
+                editor.putInt(SAVE, 0); // Storing default integer
+                editor.apply(); // commit changes
             }
         });
     }

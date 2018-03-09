@@ -38,10 +38,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="38dp"
         android:layout_marginBottom="312dp"
         android:layout_marginEnd="36dp"
         android:layout_marginStart="16dp"
@@ -49,7 +50,7 @@
         android:text="Item Limit:"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/prefSpinner"
+        app:layout_constraintEnd_toStartOf="@+id/itemSpinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/prefUrl" />
 
@@ -71,23 +72,20 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Spinner
-        android:id="@+id/prefSpinner"
+        android:id="@+id/itemSpinner"
         android:layout_width="0dp"
         android:layout_height="44dp"
-        android:layout_marginBottom="302dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="53dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/prefUrl"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/prefUrl" />
 
     <Button
         android:id="@+id/prefBtn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="18dp"
         android:layout_marginEnd="33dp"
         android:layout_marginStart="263dp"
@@ -97,5 +95,31 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prefSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/itemSpinner" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:layout_marginBottom="257dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="15dp"
+        android:text="Refresh every:"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/refreshSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Spinner
+        android:id="@+id/refreshSpinner"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/itemSpinner" />
 </android.support.constraint.ConstraintLayout>

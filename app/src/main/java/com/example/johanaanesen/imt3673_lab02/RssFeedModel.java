@@ -1,14 +1,14 @@
 package com.example.johanaanesen.imt3673_lab02;
 
-public class RssFeedModel {
+import java.io.Serializable;
+
+public class RssFeedModel implements Serializable{
 
     public String title;
     public String link;
-    public String description;
 
-    public RssFeedModel(String title, String link, String description) {
+    public RssFeedModel(String title, String link) {
         this.title = title;
         this.link = link;
-        this.description = description;
     }
 }
