@@ -264,11 +264,7 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public void onSuccess(List<RssFeedModel> res) {
             // Save to file
-            try {
-                InternalStorage.writeObject(getApplicationContext(), "asd", res);
-            }catch (IOException e) {
-                Log.e("fuck", e.getMessage());
-            }
+            writeCachedFeed(res);
 
             // Load feed entries
             setListAdapter();

@@ -12,7 +12,7 @@ import java.util.List;
 public class AutoUpdateFeed extends IntentService {
 
     public AutoUpdateFeed() {
-        super("AutoUpadteFeed");
+        super("AutoUpdateFeed");
     }
 
     @Override

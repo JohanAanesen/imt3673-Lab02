@@ -12,7 +12,7 @@
 *.apk
 *.ap_
 
-# files for the dex VM
+# files for the dex VMw
 *.dex
 
 # Java class files
