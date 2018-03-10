@@ -109,6 +109,7 @@ public class PreferencesActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 }

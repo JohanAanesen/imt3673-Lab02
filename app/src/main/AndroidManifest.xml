@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".AutoUpdateFeed"
+            android:exported="false" >
+
+        </service>
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,4 +27,6 @@
             android:parentActivityName=".HomeActivity"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
+
+
 </manifest>

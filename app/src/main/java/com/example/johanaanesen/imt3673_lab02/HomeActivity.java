@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         //set listView
         listView = (ListView)findViewById(R.id.ListeID);
 
-        rssItemList = getCachedFeed();
+        getCachedFeed();
 
         if (rssItemList == null){
             //get rss feed if none is cached from earlier
@@ -68,8 +68,6 @@ public class HomeActivity extends AppCompatActivity {
         this.backgroundService = PendingIntent.getService(this, 0, intent, 0);
 
         setAlarmManager();
-
-
     }
 
     @Override
@@ -79,6 +77,10 @@ public class HomeActivity extends AppCompatActivity {
         getPrefs();
         cancelAlarmManager();
         setAlarmManager();
+
+        if(getCachedFeed()){
+            setListAdapter();
+        }
     }
 
     public void getPrefs(){
@@ -127,15 +129,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    public List<RssFeedModel> getCachedFeed(){
+    public boolean getCachedFeed(){
         try {
-            return (List<RssFeedModel>) InternalStorage.readObject(this, KEY);
+            this.rssItemList = (List<RssFeedModel>) InternalStorage.readObject(this, KEY);
+            return true;
         }catch (IOException e) {
             Log.e(TAG, e.getMessage());
         } catch (ClassNotFoundException e) {
             Log.e(TAG, e.getMessage());
         }
-        return null;
+        return false;
     }
 
     public void writeCachedFeed(List<RssFeedModel> list){
@@ -148,7 +151,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void setAlarmManager(){
-        AlarmManager aManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager aManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
 
         // Set repeating alarm every x seconds
         long repeatEvery = (long) this.REFRESH_RATE * 1000;
@@ -165,10 +168,6 @@ public class HomeActivity extends AppCompatActivity {
     /**
      * parseFeed not my work, although I've heavily modified the code
      * original: https://github.com/obaro/SimpleRSSReader/blob/master/app/src/main/java/com/sample/foo/simplerssreader/MainActivity.java - see parseFeed function
-     * @param inputStream
-     * @return
-     * @throws XmlPullParserException
-     * @throws IOException
      */
     public static List<RssFeedModel> parseFeed(InputStream inputStream) throws XmlPullParserException, IOException {
         String title = null;
@@ -265,13 +264,13 @@ public class HomeActivity extends AppCompatActivity {
         public void onSuccess(List<RssFeedModel> res) {
             // Save to file
             writeCachedFeed(res);
-
-            // Load feed entries
-            setListAdapter();
-
-            Toast.makeText(HomeActivity.this,
-                    "Successfully updated.",
-                    Toast.LENGTH_LONG).show();
+            if(getCachedFeed()){
+                // Load feed entries
+                setListAdapter();
+                Toast.makeText(HomeActivity.this,
+                        "Successfully updated.",
+                        Toast.LENGTH_LONG).show();
+            }
         }
 
         @Override
@@ -290,7 +289,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     @Override
-    public void onBackPressed(){ // https://stackoverflow.com/a/42615612 answer i've used :)
+    public void onBackPressed(){
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

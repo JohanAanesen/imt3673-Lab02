@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class ContentActivity extends AppCompatActivity {
 
@@ -21,6 +22,7 @@ public class ContentActivity extends AppCompatActivity {
         }
 
         WebView w1=(WebView)findViewById(R.id.webView);
+        w1.setWebViewClient(new WebViewClient());
         w1.getSettings().setJavaScriptEnabled(true);
         w1.getSettings().setBuiltInZoomControls(true);
 
