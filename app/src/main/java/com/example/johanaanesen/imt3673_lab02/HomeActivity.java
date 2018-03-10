@@ -1,5 +1,8 @@
 package com.example.johanaanesen.imt3673_lab02;
 
+import android.app.AlarmManager;
+import android.app.ListActivity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,7 +39,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private static String URL = ""; //default
-    private static int MAX_ITEMS = 20; //default
+    private static String MAX_ITEMS = "20"; //default
     private static int REFRESH_RATE = 10*60;
     private static String KEY = "asd";
     private static String TAG = "tag_asd";
@@ -45,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
     private List<RssFeedModel> tempItemList;
     private ListView listView;
     private ListAdapter listAdapter;
+    private PendingIntent backgroundService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +65,24 @@ public class HomeActivity extends AppCompatActivity {
 
         if (rssItemList == null){
             //get rss feed if none is cached from earlier
-            new FetchFeedTask().execute((Void) null);
+            FetchFeedTask task = new FetchFeedTask(new fetchCallback());
+            task.execute(URL, MAX_ITEMS);
         }else{
             setListAdapter();
             Toast.makeText(HomeActivity.this,
                     "Welcome back :)",
                     Toast.LENGTH_LONG).show();
         }
+
+        // Create pendingintent for background service
+        Intent intent = new Intent(this, AutoUpdateFeed.class);
+        intent.putExtra("url", this.URL);
+        intent.putExtra("max_items", this.MAX_ITEMS);
+        this.backgroundService = PendingIntent.getService(this, 0, intent, 0);
+
+        setAlarmManager();
+
+
     }
 
     @Override
@@ -75,6 +90,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
         //reload preferences
         getPrefs();
+        cancelAlarmManager();
+        setAlarmManager();
     }
 
     public void getPrefs(){
@@ -85,15 +102,15 @@ public class HomeActivity extends AppCompatActivity {
         String userURL = shared.getString("URL", "https://www.vg.no/rss/feed");
         URL = userURL;
         switch (itemSpinner){
-            case 0: MAX_ITEMS = 10;
+            case 0: MAX_ITEMS = "10";
                 break;
-            case 1: MAX_ITEMS = 20;
+            case 1: MAX_ITEMS = "20";
                 break;
-            case 2: MAX_ITEMS = 50;
+            case 2: MAX_ITEMS = "50";
                 break;
-            case 3: MAX_ITEMS = 100;
+            case 3: MAX_ITEMS = "100";
                 break;
-            default: MAX_ITEMS = 20;
+            default: MAX_ITEMS = "20";
                 break;
         }
         switch (refreshSpinner){
@@ -118,7 +135,8 @@ public class HomeActivity extends AppCompatActivity {
                 "updating..",
                 Toast.LENGTH_LONG).show();
 
-        new FetchFeedTask().execute((Void) null);
+        FetchFeedTask task = new FetchFeedTask(new fetchCallback());
+        task.execute(URL, MAX_ITEMS);
     }
 
 
@@ -142,6 +160,21 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    public void setAlarmManager(){
+        AlarmManager aManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+
+        // Set repeating alarm every x seconds
+        long repeatEvery = (long) this.REFRESH_RATE * 1000;
+        aManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis() + repeatEvery,
+                repeatEvery, this.backgroundService);
+    }
+
+    public void cancelAlarmManager(){
+        AlarmManager aManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        aManager.cancel(this.backgroundService);
+    }
+
     /**
      * parseFeed not my work, although I've heavily modified the code
      * original: https://github.com/obaro/SimpleRSSReader/blob/master/app/src/main/java/com/sample/foo/simplerssreader/MainActivity.java - see parseFeed function
@@ -150,7 +183,7 @@ public class HomeActivity extends AppCompatActivity {
      * @throws XmlPullParserException
      * @throws IOException
      */
-    public List<RssFeedModel> parseFeed(InputStream inputStream) throws XmlPullParserException, IOException {
+    public static List<RssFeedModel> parseFeed(InputStream inputStream) throws XmlPullParserException, IOException {
         String title = null;
         String link = null;
         boolean isItem = false;
@@ -215,58 +248,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * FetchFeedTask not 100% my work, although heavily modified
-     * original: https://github.com/obaro/SimpleRSSReader/blob/master/app/src/main/java/com/sample/foo/simplerssreader/MainActivity.java
-     */
-    private class FetchFeedTask extends AsyncTask<Void, Void, Boolean> {
 
-        private String urlLink;
-
-        @Override
-        protected void onPreExecute() {
-           urlLink = URL;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            if (TextUtils.isEmpty(urlLink))
-                return false;
-
-            try {
-                if(!urlLink.startsWith("http://") && !urlLink.startsWith("https://"))
-                    urlLink = "https://" + urlLink;
-
-                URL url = new URL(urlLink+ "?limit=" + MAX_ITEMS);
-                InputStream inputStream = url.openConnection().getInputStream();
-                tempItemList = parseFeed(inputStream);
-                return true;
-            } catch (IOException e) { //error handling
-                Log.e("HomeActivity", "Error", e);
-            } catch (XmlPullParserException e) {
-                Log.e("HomeActivity", "Error", e);
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            if (success) {
-
-                writeCachedFeed(tempItemList);
-                rssItemList = getCachedFeed();
-                setListAdapter();
-
-                Toast.makeText(HomeActivity.this,
-                        "Successfully updated.",
-                        Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(HomeActivity.this,
-                        "Enter a valid Rss feed url",
-                        Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 
     public void setListAdapter(){
         //set list adapter / fill listView
@@ -287,6 +269,42 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Callback for when fetch feed task is done
+     */
+    private class fetchCallback implements Task {
+        @Override
+        public void onSuccess(List<RssFeedModel> res) {
+            // Save to file
+            try {
+                InternalStorage.writeObject(getApplicationContext(), "asd", res);
+            }catch (IOException e) {
+                Log.e("fuck", e.getMessage());
+            }
+
+            // Load feed entries
+            setListAdapter();
+
+            Toast.makeText(HomeActivity.this,
+                    "Successfully updated.",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onError(Exception err) {
+            if (err instanceof IOException) {
+                Toast.makeText(HomeActivity.this,
+                        "Error fetching feed",
+                        Toast.LENGTH_LONG).show();
+            } else if (err instanceof XmlPullParserException) {
+                Toast.makeText(HomeActivity.this,
+                        "Error fetching feed",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 
     @Override
     public void onBackPressed(){ // https://stackoverflow.com/a/42615612 answer i've used :)
