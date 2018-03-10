@@ -2,11 +2,9 @@ package com.example.johanaanesen.imt3673_lab02;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 

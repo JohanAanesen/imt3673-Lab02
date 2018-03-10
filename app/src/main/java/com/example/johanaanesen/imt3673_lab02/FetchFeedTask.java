@@ -3,7 +3,6 @@ package com.example.johanaanesen.imt3673_lab02;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParserException;
 
